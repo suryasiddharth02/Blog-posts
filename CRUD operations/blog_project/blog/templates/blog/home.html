@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Blog Home</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f9f9f9; margin: 0; padding: 0; }
+        .container { max-width: 700px; margin: 40px auto; background: #fff; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
+        h1 { color: #333; }
+        .post-list { list-style: none; padding: 0; }
+        .post-item { padding: 1rem 0; border-bottom: 1px solid #eee; }
+        .post-title { font-size: 1.2rem; color: #0077cc; text-decoration: none; }
+        .post-meta { color: #888; font-size: 0.95rem; }
+        .new-post { display: inline-block; margin-bottom: 1.5rem; padding: 0.5rem 1rem; background: #0077cc; color: #fff; border-radius: 4px; text-decoration: none; }
+        .new-post:hover { background: #005fa3; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>My Blog</h1>
+        <a href="{% url 'post_create' %}" class="new-post">+ New Post</a>
+        <ul class="post-list">
+            {% for post in posts %}
+                <li class="post-item">
+                    <a href="{% url 'post_detail' post.slug %}" class="post-title">{{ post.title }}</a>
+                    <div class="post-meta">by {{ post.author }} on {{ post.created|date:'M d, Y H:i' }}</div>
+                </li>
+            {% empty %}
+                <li>No posts yet. <a href="{% url 'post_create' %}">Create one?</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html> 

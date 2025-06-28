@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ post.title|default:"New Post" }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+            margin: 0;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 700px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 2.5rem 2rem 2rem 2rem;
+            border-radius: 16px;
+            box-shadow: 0 6px 32px rgba(0,0,0,0.10);
+        }
+        h1 {
+            color: #f76b1c;
+            margin-bottom: 0.5rem;
+            font-family: 'Roboto', Arial, sans-serif;
+        }
+        .meta {
+            color: #888;
+            font-size: 1rem;
+            margin-bottom: 2rem;
+        }
+        .content {
+            font-size: 1.15rem;
+            color: #333;
+            margin-bottom: 2rem;
+            line-height: 1.7;
+            font-family: 'Roboto', Arial, sans-serif;
+        }
+        .actions {
+            margin-top: 2rem;
+        }
+        .actions a, .actions form button {
+            margin-right: 1rem;
+            text-decoration: none;
+            color: #fff;
+            background: linear-gradient(90deg, #f76b1c 0%, #fad961 100%);
+            border: none;
+            border-radius: 6px;
+            padding: 0.6rem 1.2rem;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: inline-block;
+        }
+        .actions a:hover, .actions form button:hover {
+            background: linear-gradient(90deg, #fad961 0%, #f76b1c 100%);
+            color: #fff;
+        }
+        .form-section {
+            margin-top: 2rem;
+            font-family: Arial, sans-serif;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+        label {
+            font-weight: 500;
+            margin-bottom: 0.3rem;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 0.7rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 1rem;
+            background: #fafafa;
+            transition: border 0.2s;
+        }
+        input:focus, textarea:focus {
+            border: 1.5px solid #f76b1c;
+            outline: none;
+        }
+        button[type="submit"] {
+            background: linear-gradient(90deg, #f76b1c 0%, #fad961 100%);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 0.7rem;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        button[type="submit"]:hover {
+            background: linear-gradient(90deg, #fad961 0%, #f76b1c 100%);
+        }
+        .footer {
+            margin-top: 2.5rem;
+            color: #888;
+            font-size: 0.95rem;
+            text-align: center;
+        }
+        .back-home-btn {
+            display: inline-block;
+            margin-top: 1.5rem;
+            background: linear-gradient(90deg, #43cea2 0%, #185a9d 100%);
+            color: #fff !important;
+            padding: 0.6rem 1.4rem;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 500;
+            text-decoration: none;
+            box-shadow: 0 2px 8px rgba(67,206,162,0.10);
+            transition: background 0.2s, transform 0.2s;
+            border: none;
+        }
+        .back-home-btn:hover {
+            background: linear-gradient(90deg, #185a9d 0%, #43cea2 100%);
+            color: #fff;
+            transform: translateY(-2px) scale(1.04);
+            box-shadow: 0 4px 16px rgba(24,90,157,0.13);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        {% if post %}
+            <h1>{{ post.title }}</h1>
+            <div class="meta">by {{ post.author }} on {{ post.created|date:'M d, Y H:i' }}</div>
+            <div class="content">{{ post.content }}</div>
+            <div class="actions">
+                <a href="{% url 'post_update' post.slug %}">Edit</a>
+                <form action="{% url 'post_delete' post.slug %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit">Delete</button>
+                </form>
+                <a href="{% url 'home' %}" class="back-home-btn">
+                    &#8592; Back to Home
+                </a>
+            </div>
+        {% else %}
+            <div class="form-section">
+                <h1>New Post</h1>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit">Save</button>
+                </form>
+                <a href="{% url 'home' %}" class="back-home-btn">
+                    &#8592; Back to Home
+                </a>
+            </div>
+        {% endif %}
+        <div class="footer">
+            &copy; {{ now|date:'Y' }} My Blog. All rights reserved.
+        </div>
+    </div>
+</body>
+</html> 

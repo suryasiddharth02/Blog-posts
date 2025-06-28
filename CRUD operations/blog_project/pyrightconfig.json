@@ -1,0 +1,19 @@
+{
+  "include": [
+    "."
+  ],
+  "exclude": [
+    "**/node_modules",
+    "**/__pycache__",
+    "**/migrations",
+    ".venv"
+  ],
+  "ignore": [
+    "**/migrations/**"
+  ],
+  "reportMissingImports": false,
+  "reportMissingTypeStubs": false,
+  "reportAttributeAccessIssue": "none",
+  "pythonVersion": "3.8",
+  "pythonPlatform": "Windows"
+} 
